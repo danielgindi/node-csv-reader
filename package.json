@@ -1,0 +1,29 @@
+{
+  "name": "csv-reader",
+  "version": "1.0.0",
+  "description": "A CSV stream reader, with many many features, and ability to work with the largest datasets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielgindi/node-csv-reader"
+  },
+  "keywords": [
+    "node.js",
+    "csv",
+    "reader",
+    "parser",
+    "stream",
+    "fast"
+  ],
+  "author": "Daniel Cohen Gindi <danielgindi@gmail.com> (https://github.com/danielgindi)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielgindi/node-csv-reader/issues"
+  },
+  "homepage": "https://github.com/danielgindi/node-csv-reader",
+  "dependencies": {
+  }
+}
