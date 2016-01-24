@@ -1,6 +1,6 @@
 {
   "name": "csv-reader",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A CSV stream reader, with many many features, and ability to work with the largest datasets",
   "main": "index.js",
   "scripts": {
