@@ -1,10 +1,10 @@
-# node-csv-reader
+# csv-reader
 
 [![npm Version](https://badge.fury.io/js/csv-reader.png)](https://npmjs.org/package/csv-reader)
 
 A CSV stream reader, with many many features, and ability to work with the largest datasets
 
-Included features: (can be turned on and off)
+## Included features: (can be turned on and off)
 
 * Support for excel-style multiline cells wrapped in quotes
 * Choosing a different delimiter instead of the comma
@@ -14,6 +14,12 @@ Included features: (can be turned on and off)
 * Being a stream transformer, you can `.pause()` if you need some time to process the row and `.resume()` when you are ready to receive and process more rows.
 * Consumes and emits rows one-by-one, allowing you to process datasets in any size imaginable.
 * Automatically strips the BOM if exists (not handled automatically by node.js stream readers)
+
+## Installation:
+
+```
+npm install --save csv-reader
+```
 
 The options you can pass are:
 
@@ -29,7 +35,7 @@ Name | Type | Default | Explanation
   `rtrim` | `Boolean` | `false` | Automatically right-trims columns
   `trim` | `Boolean` | `false` | If true, then both 'ltrim' and 'rtrim' are set to true
 
-Usage example:
+##Usage example:
 
 ```javascript
 
@@ -42,7 +48,8 @@ inputStream
 	.pipe(CsvReader({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
-	}).on('end', function (data) {
+	})
+	.on('end', function (data) {
 	    console.log('No more rows!');
 	});
 
