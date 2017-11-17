@@ -45,7 +45,7 @@ var CsvReadableStream = require('csv-reader');
 var inputStream = fs.createReadStream('my_data.csv', 'utf8');
 
 inputStream
-	.pipe(CsvReader({ parseNumbers: true, parseBooleans: true, trim: true }))
+	.pipe(CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
 	})
@@ -71,7 +71,7 @@ var inputStream = fs.createReadStream('my_data.csv')
 // It will pass a properly decoded data to the CsvReader.
  
 inputStream
-	.pipe(CsvReader({ parseNumbers: true, parseBooleans: true, trim: true }))
+	.pipe(CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
 	}).on('end', function (data) {
