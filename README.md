@@ -9,6 +9,7 @@ A CSV stream reader, with many many features, and ability to work with the large
 * Support for excel-style multiline cells wrapped in quotes
 * Choosing a different delimiter instead of the comma
 * Automatic skipping empty lines
+* Automatic skipping of the first header row
 * Automatic parsing of numbers and booleans
 * Automatic trimming
 * Being a stream transformer, you can `.pause()` if you need some time to process the row and `.resume()` when you are ready to receive and process more rows.
@@ -29,6 +30,7 @@ Name | Type | Default | Explanation
   `multiline` | `Boolean` | `true` | Allow multiline cells, when the cell is wrapped with quotes ("...\n...") 
   `allowQuotes` | `Boolean` | `true` | Should quotes be treated as a special character that wraps cells etc.
   `skipEmptyLines` | `Boolean` | `false` | Should empty lines be automatically skipped?
+  `skipHeader` | `Boolean` | `false` | Should the first header row be skipped?
   `parseNumbers` | `Boolean` | `false` | Should numbers be automatically parsed? This will parse any format supported by `parseFloat` including scientific notation, `Infinity` and `NaN`.
   `parseBooleans` | `Boolean` | `false` | Automatically parse booleans (strictly lowercase `true` and `false`)
   `ltrim` | `Boolean` | `false` | Automatically left-trims columns

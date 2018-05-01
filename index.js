@@ -20,6 +20,7 @@ var Transform = stream.Transform;
  * @param {Boolean=false} options.ltrim - Automatically left-trims columns
  * @param {Boolean=false} options.rtrim - Automatically right-trims columns
  * @param {Boolean=false} options.trim - If true, then both 'ltrim' and 'rtrim' are set to true
+ * @param {Boolean=false} options.skipheader - If true, then skip the first header row
  * @returns {CsvReadableStream}
  * @constructor
  */
@@ -42,6 +43,7 @@ var CsvReadableStream = function (options) {
         , lastLineEndCR = false
         , lookForBOM = true
         , isQuoted = false
+        , rowCount = 0
 
         , multiline = !!options.multiline || typeof options.multiline === 'undefined'
         , delimiter = options.delimiter != null ? options.delimiter.toString() || ',' : ','
@@ -52,6 +54,7 @@ var CsvReadableStream = function (options) {
         , ltrim = !!options.ltrim || !!options.trim
         , rtrim = !!options.rtrim || !!options.trim
         , trim = options.ltrim && options.rtrim
+        , skipHeader = options.skipHeader
 
         , postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
 
@@ -119,6 +122,7 @@ var CsvReadableStream = function (options) {
                     lastLineEndCR = c === '\r';
                     dataIndex++;
                     isFinishedLine = true;
+                    rowCount++;
 
                     if (!multiline) {
                         isQuoted = false;
@@ -172,7 +176,14 @@ var CsvReadableStream = function (options) {
             data = null;
         }
 
-        if (isFinishedLine || (data === null && this._isStreamDone)) {
+        if (isFinishedLine && skipHeader && rowCount === 1) {
+            column = '';
+            columns = [];
+             // Look to see if there are more rows in available data
+            this._processChunk();
+            return;
+        }
+        else if (isFinishedLine || (data === null && this._isStreamDone)) {
 
             if (columns.length || column || data || !this._isStreamDone) {
 
