@@ -58,7 +58,7 @@ inputStream
 ```
 
 A common issue with CSVs are that Microsoft Excel for some reason *does not save UTF8 files*. Microsoft never liked standards.
-In order to automagically handle the possibility of such files with ANSI encodings arriving from user input, you can use the [autodetect-decoder-stream](https://www.npmjs.com/package/autodetect-decoder-stream) like this:
+In order to automatically handle the possibility of such files with ANSI encodings arriving from user input, you can use the [autodetect-decoder-stream](https://www.npmjs.com/package/autodetect-decoder-stream) like this:
 
 ```javascript
 
