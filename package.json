@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "A CSV stream reader, with many many features, and ability to work with the largest datasets",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "node test/test.js"
   },
