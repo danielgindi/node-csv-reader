@@ -11,6 +11,9 @@
     "type": "git",
     "url": "https://github.com/danielgindi/node-csv-reader"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "keywords": [
     "node.js",
     "csv",
