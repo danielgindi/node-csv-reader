@@ -61,7 +61,7 @@ const CsvReadableStream = function (options) {
     const postProcessColumn = function (column) {
 
         if (trim) {
-            column = column.replace(/^\s+|\s+$/, '');
+            column = column.trim();
         } else if (ltrim) {
             column = column.replace(/^\s+/, '');
         } else if (rtrim) {
