@@ -41,13 +41,13 @@ Name | Type | Default | Explanation
 
 ```javascript
 
-var fs = require('fs');
-var CsvReadableStream = require('csv-reader');
+const Fs = require('fs');
+const CsvReadableStream = require('csv-reader');
 
-var inputStream = fs.createReadStream('my_data.csv', 'utf8');
+let inputStream = Fs.createReadStream('my_data.csv', 'utf8');
 
 inputStream
-	.pipe(CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
+	.pipe(new CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
 	})
@@ -62,18 +62,18 @@ In order to automagically handle the possibility of such files with ANSI encodin
 
 ```javascript
 
-var fs = require('fs');
-var CsvReadableStream = require('csv-reader');
-var AutoDetectDecoderStream = require('autodetect-decoder-stream');
+const Fs = require('fs');
+const CsvReadableStream = require('csv-reader');
+const AutoDetectDecoderStream = require('autodetect-decoder-stream');
 
-var inputStream = fs.createReadStream('my_data.csv')
+let inputStream = Fs.createReadStream('my_data.csv')
 	.pipe(new AutoDetectDecoderStream({ defaultEncoding: '1255' })); // If failed to guess encoding, default to 1255
 
 // The AutoDetectDecoderStream will know if the stream is UTF8, windows-1255, windows-1252 etc.
 // It will pass a properly decoded data to the CsvReader.
  
 inputStream
-	.pipe(CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
+	.pipe(new CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
 	}).on('end', function (data) {

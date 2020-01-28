@@ -1,13 +1,13 @@
-var stream = require('stream');
-var util = require('util');
+const Stream = require('stream');
+const Util = require('util');
 
 /**
  * @const
  * @type {RegExp}
  */
-var PARSE_FLOAT_TEST = /^[0-9]+(?:\.[0-9]*)?(?:[eE]\+[0-9]+)?$|^(?:[0-9]+)?\.[0-9]+(?:e+[0-9]+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
+const PARSE_FLOAT_TEST = /^[0-9]+(?:\.[0-9]*)?(?:[eE]\+[0-9]+)?$|^(?:[0-9]+)?\.[0-9]+(?:e+[0-9]+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
 
-var Transform = stream.Transform;
+const Transform = Stream.Transform;
 
 /**
  * @param {Object?} options
@@ -24,7 +24,7 @@ var Transform = stream.Transform;
  * @returns {CsvReadableStream}
  * @constructor
  */
-var CsvReadableStream = function (options) {
+const CsvReadableStream = function (options) {
     options = options || {};
 
     //noinspection JSUndefinedPropertyAssignment
@@ -34,39 +34,37 @@ var CsvReadableStream = function (options) {
         return new CsvReadableStream(options);
     }
 
-    var data = null
-        , dataIndex = null
-        , nextIndex = null
-        , dataLen = null
-        , columns = []
-        , column = ''
-        , lastLineEndCR = false
-        , lookForBOM = true
-        , isQuoted = false
-        , rowCount = 0
+    let data = null,
+        dataIndex = null,
+        nextIndex = null,
+        dataLen = null,
+        columns = [],
+        column = '',
+        lastLineEndCR = false,
+        lookForBOM = true,
+        isQuoted = false,
+        rowCount = 0;
 
-        , multiline = !!options.multiline || typeof options.multiline === 'undefined'
-        , delimiter = options.delimiter != null ? options.delimiter.toString() || ',' : ','
-        , allowQuotes = !!options.allowQuotes || typeof options.allowQuotes === 'undefined'
-        , skipEmptyLines = !!options.skipEmptyLines
-        , parseNumbers = !!options.parseNumbers
-        , parseBooleans = !!options.parseBooleans
-        , ltrim = !!options.ltrim || !!options.trim
-        , rtrim = !!options.rtrim || !!options.trim
-        , trim = options.ltrim && options.rtrim
-        , skipHeader = options.skipHeader
+    const multiline = !!options.multiline || typeof options.multiline === 'undefined',
+        delimiter = options.delimiter != null ? options.delimiter.toString() || ',' : ',',
+        allowQuotes = !!options.allowQuotes || typeof options.allowQuotes === 'undefined',
+        skipEmptyLines = !!options.skipEmptyLines,
+        parseNumbers = !!options.parseNumbers,
+        parseBooleans = !!options.parseBooleans,
+        ltrim = !!options.ltrim || !!options.trim,
+        rtrim = !!options.rtrim || !!options.trim,
+        trim = options.ltrim && options.rtrim,
+        skipHeader = options.skipHeader,
 
-        , postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
+        postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
 
-    var postProcessColumn = function (column) {
+    const postProcessColumn = function (column) {
 
         if (trim) {
             column = column.replace(/^\s+|\s+$/, '');
-        }
-        else if (ltrim) {
+        } else if (ltrim) {
             column = column.replace(/^\s+/, '');
-        }
-        else if (rtrim) {
+        } else if (rtrim) {
             column = column.replace(/\s+$/, '');
         }
 
@@ -108,10 +106,10 @@ var CsvReadableStream = function (options) {
             lookForBOM = false;
         }
 
-        var isFinishedLine = false;
+        let isFinishedLine = false;
 
         for (; dataIndex < dataLen; dataIndex++) {
-            var c = data[dataIndex];
+            const c = data[dataIndex];
 
             if (c === '\n' || c === '\r') {
                 if (!isQuoted || !multiline) {
@@ -148,25 +146,20 @@ var CsvReadableStream = function (options) {
                     } else {
                         isQuoted = false;
                     }
-                }
-                else {
+                } else {
                     column += c;
                 }
-            }
-            else {
+            } else {
                 if (c === delimiter) {
                     columns.push(column);
                     column = '';
-                }
-                else if (c === '"' && allowQuotes) {
+                } else if (c === '"' && allowQuotes) {
                     if (column.length) {
                         column += c;
-                    }
-                    else {
+                    } else {
                         isQuoted = true;
                     }
-                }
-                else {
+                } else {
                     column += c;
                 }
             }
@@ -179,11 +172,10 @@ var CsvReadableStream = function (options) {
         if (isFinishedLine && skipHeader && rowCount === 1) {
             column = '';
             columns = [];
-             // Look to see if there are more rows in available data
+            // Look to see if there are more rows in available data
             this._processChunk();
             return;
-        }
-        else if (isFinishedLine || (data === null && this._isStreamDone)) {
+        } else if (isFinishedLine || (data === null && this._isStreamDone)) {
 
             if (columns.length || column || data || !this._isStreamDone) {
 
@@ -191,7 +183,7 @@ var CsvReadableStream = function (options) {
 
                 // Commit this row
                 columns.push(column);
-                var row = columns;
+                const row = columns;
 
                 // Clear row state data
                 columns = [];
@@ -203,7 +195,9 @@ var CsvReadableStream = function (options) {
 
                     // Post processing
                     if (postProcessingEnabled) {
-                        for (var i = 0, rowSize = row.length; i < rowSize; i++) {
+                        let i = 0;
+                        const rowSize = row.length;
+                        for (; i < rowSize; i++) {
                             row[i] = postProcessColumn(row[i]);
                         }
                     }
@@ -241,7 +235,7 @@ var CsvReadableStream = function (options) {
     Transform.call(this, options);
 };
 
-util.inherits(CsvReadableStream, Transform);
+Util.inherits(CsvReadableStream, Transform);
 
 //noinspection JSUnusedGlobalSymbols
 CsvReadableStream.prototype._transform = function (chunk, enc, cb) {
