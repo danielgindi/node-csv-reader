@@ -21,6 +21,8 @@ const Transform = Stream.Transform;
  * @param {boolean} [options.rtrim=false] - Automatically right-trims columns
  * @param {boolean} [options.trim=false] - If true, then both 'ltrim' and 'rtrim' are set to true
  * @param {boolean} [options.skipHeader=false] - If true, then skip the first header row
+ * @param {boolean} [options.asObject=false] - If true, each row will be converted automatically to an object based
+ *                                             on the header. This implied `skipHeader=true`.
  * @returns {CsvReadableStream}
  * @constructor
  */
@@ -38,8 +40,8 @@ const CsvReadableStream = function (options) {
         dataIndex = null,
         nextIndex = null,
         dataLen = null,
-        columns = [],
         column = '',
+        columnCount = 0,
         lastLineEndCR = false,
         lookForBOM = true,
         isQuoted = false,
@@ -54,9 +56,15 @@ const CsvReadableStream = function (options) {
         ltrim = !!options.ltrim || !!options.trim,
         rtrim = !!options.rtrim || !!options.trim,
         trim = ltrim && rtrim,
-        skipHeader = options.skipHeader,
+        asObject = !!options.asObject,
+        skipHeader = !!options.skipHeader || asObject,
 
         postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
+
+    let headerRow = [];
+
+    /** @type {*[]|Object<string,*>} */
+    let columns = asObject === true ? {} : [];
 
     const postProcessColumn = function (column) {
 
@@ -108,6 +116,8 @@ const CsvReadableStream = function (options) {
 
         let isFinishedLine = false;
 
+        const rowIndex = rowCount;
+
         for (; dataIndex < dataLen; dataIndex++) {
             const c = data[dataIndex];
 
@@ -151,8 +161,22 @@ const CsvReadableStream = function (options) {
                 }
             } else {
                 if (c === delimiter) {
-                    columns.push(column);
+                    if (rowIndex === 0) {
+                        headerRow.push(column.trim());
+                    }
+
+                    if (column.length > 0 && postProcessingEnabled === true) {
+                        column = postProcessColumn(column);
+                    }
+
+                    if (asObject === true) {
+                        columns[headerRow[columnCount]] = column;
+                    } else {
+                        columns.push(column);
+                    }
+
                     column = '';
+                    columnCount++;
                 } else if (c === '"' && allowQuotes) {
                     if (column.length) {
                         column += c;
@@ -169,42 +193,47 @@ const CsvReadableStream = function (options) {
             data = null;
         }
 
-        if (isFinishedLine && skipHeader && rowCount === 1) {
-            column = '';
-            columns = [];
-            // Look to see if there are more rows in available data
-            this._processChunk();
-            return;
-        } else if (isFinishedLine || (data === null && this._isStreamDone)) {
+        if (isFinishedLine || (data === null && this._isStreamDone === true)) {
 
-            if (columns.length || column || data || !this._isStreamDone) {
+            if (columnCount > 0 ||
+                column.length > 0 ||
+                data !== null ||
+                !this._isStreamDone) {
 
-                // We have a row, send it to the callback
+                const isEmptyRow = columnCount === 1 && column.length === 0;
+
+                // Process last column
+                if (rowIndex === 0) {
+                    headerRow.push(column.trim());
+                    this.emit('header', headerRow);
+                }
+
+                if (column.length > 0 && postProcessingEnabled === true) {
+                    column = postProcessColumn(column);
+                }
+
+                if (asObject === true) {
+                    columns[headerRow[columnCount]] = column;
+                } else {
+                    columns.push(column);
+                }
 
                 // Commit this row
-                columns.push(column);
-                const row = columns;
+                let row = columns;
 
                 // Clear row state data
-                columns = [];
+                columns = asObject === true ? {} : [];
                 column = '';
+                columnCount = 0;
                 isQuoted = false;
 
-                // Is this row full or empty?
-                if (row.length > 1 || row[0].length || !skipEmptyLines) {
-
-                    // Post processing
-                    if (postProcessingEnabled) {
-                        let i = 0;
-                        const rowSize = row.length;
-                        for (; i < rowSize; i++) {
-                            row[i] = postProcessColumn(row[i]);
-                        }
+                if (skipHeader === false || rowIndex > 0) {
+                    // Is this row full or empty?
+                    if (isEmptyRow === false || skipEmptyLines === false) {
+                        // Emit the parsed row
+                        //noinspection JSUnresolvedFunction
+                        this.push(row);
                     }
-
-                    // Emit the parsed row
-                    //noinspection JSUnresolvedFunction
-                    this.push(row);
                 }
 
                 // Look to see if there are more rows in available data

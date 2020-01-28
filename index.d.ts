@@ -60,6 +60,13 @@ declare type CsvReadableStreamOptions = {
    * @default false
    */
   skipHeader?: boolean;
+
+  /**
+   * If true, each row will be converted automatically to an object based on the header.
+   * This implied `skipHeader=true`.
+   * @default false
+   */
+  asObject?: boolean;
 };
 
 declare type Line = (string | number | boolean)[];
