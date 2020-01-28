@@ -59,7 +59,7 @@ declare type CsvReadableStreamOptions = {
    * If true, then skip the first header row
    * @default false
    */
-  skipheader?: boolean;
+  skipHeader?: boolean;
 };
 
 declare type Line = (string | number | boolean)[];

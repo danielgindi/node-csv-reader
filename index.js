@@ -11,16 +11,16 @@ var Transform = stream.Transform;
 
 /**
  * @param {Object?} options
- * @param {String?} options.delimiter=',' - Specify what is the CSV delimeter
- * @param {Boolean=true} options.multiline - Support Excel-like multiline CSV
- * @param {Boolean=true} options.allowQuotes - Allow quotation marks to wrap columns
- * @param {Boolean=false} options.skipEmptyLines - Should empty lines be automatically skipped?
- * @param {Boolean=false} options.parseNumbers - Automatically parse numbers (with a . as the decimal separator)
- * @param {Boolean=false} options.parseBooleans - Automatically parse booleans (strictly lowercase `true` and `false`)
- * @param {Boolean=false} options.ltrim - Automatically left-trims columns
- * @param {Boolean=false} options.rtrim - Automatically right-trims columns
- * @param {Boolean=false} options.trim - If true, then both 'ltrim' and 'rtrim' are set to true
- * @param {Boolean=false} options.skipheader - If true, then skip the first header row
+ * @param {string} [options.delimiter=','] - Specify what is the CSV delimeter
+ * @param {boolean} [options.multiline=true] - Support Excel-like multiline CSV
+ * @param {boolean} [options.allowQuotes=true] - Allow quotation marks to wrap columns
+ * @param {boolean} [options.skipEmptyLines=false] - Should empty lines be automatically skipped?
+ * @param {boolean} [options.parseNumbers=false] - Automatically parse numbers (with a . as the decimal separator)
+ * @param {boolean} [options.parseBooleans=false] - Automatically parse booleans (strictly lowercase `true` and `false`)
+ * @param {boolean} [options.ltrim=false] - Automatically left-trims columns
+ * @param {boolean} [options.rtrim=false] - Automatically right-trims columns
+ * @param {boolean} [options.trim=false] - If true, then both 'ltrim' and 'rtrim' are set to true
+ * @param {boolean} [options.skipHeader=false] - If true, then skip the first header row
  * @returns {CsvReadableStream}
  * @constructor
  */
