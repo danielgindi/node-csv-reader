@@ -65,11 +65,11 @@ declare type CsvReadableStreamOptions = {
 declare type Line = (string | number | boolean)[];
 
 export declare class CsvReadableStream extends Transform {
-  constructor(options: CsvReadableStreamOptions);
+  constructor(options?: CsvReadableStreamOptions);
 
   on(event: "data", cb: (line: Line) => void): CsvReadableStream;
 }
 
 export declare function CsvReadableStream(
-  options: CsvReadableStreamOptions
+  options?: CsvReadableStreamOptions
 ): CsvReadableStream;
