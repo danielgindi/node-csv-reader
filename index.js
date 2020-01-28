@@ -53,7 +53,7 @@ const CsvReadableStream = function (options) {
         parseBooleans = !!options.parseBooleans,
         ltrim = !!options.ltrim || !!options.trim,
         rtrim = !!options.rtrim || !!options.trim,
-        trim = options.ltrim && options.rtrim,
+        trim = ltrim && rtrim,
         skipHeader = options.skipHeader,
 
         postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
