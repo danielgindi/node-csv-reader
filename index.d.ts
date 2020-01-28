@@ -5,61 +5,61 @@ declare type CsvReadableStreamOptions = {
    * Specify what is the CSV delimiter
    * @default ","
    */
-  delimiter: string;
+  delimiter?: string;
 
   /**
    * Support Excel-like multiline CSV
    * @default true
    */
-  multiline: boolean;
+  multiline?: boolean;
 
   /**
    * Allow quotation marks to wrap columns
    * @default true
    */
-  allowQuotes: boolean;
+  allowQuotes?: boolean;
 
   /**
    * Should empty lines be automatically skipped?
    * @default false
    */
-  skipEmptyLines: boolean;
+  skipEmptyLines?: boolean;
 
   /**
    * Automatically parse numbers (with a . as the decimal separator)
    * @default false
    */
-  parseNumbers: boolean;
+  parseNumbers?: boolean;
 
   /**
    * Automatically parse booleans (strictly lowercase `true` and `false`)
    * @default false
    */
-  parseBooleans: boolean;
+  parseBooleans?: boolean;
 
   /**
    * Automatically left-trims columns
    * @default false
    */
-  ltrim: boolean;
+  ltrim?: boolean;
 
   /**
    * Automatically right-trims columns
    * @default false
    */
-  rtrim: boolean;
+  rtrim?: boolean;
 
   /**
    * If true, then both 'ltrim' and 'rtrim' are set to true
    * @default false
    */
-  trim: boolean;
+  trim?: boolean;
 
   /**
    * If true, then skip the first header row
    * @default false
    */
-  skipheader: boolean;
+  skipheader?: boolean;
 };
 
 declare type Line = (string | number | boolean)[];
