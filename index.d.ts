@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import { Transform } from "stream";
 
 declare type CsvReadableStreamOptions = {
