@@ -71,7 +71,9 @@ declare type CsvReadableStreamOptions = {
   asObject?: boolean;
 };
 
-declare type Line = (string | number | boolean)[];
+declare type DataTypes = string | number | boolean;
+
+declare type Line = DataTypes[] | { [header: string]: DataTypes };
 
 declare interface CsvReadableStream extends Transform {
   new (options?: CsvReadableStreamOptions): this;
