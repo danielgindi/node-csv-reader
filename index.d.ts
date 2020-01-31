@@ -76,7 +76,15 @@ declare type DataTypes = string | number | boolean;
 declare type Line = DataTypes[] | { [header: string]: DataTypes };
 
 declare interface CsvReadableStream extends Transform {
+  /**
+   * Create a new readable stream that parses CSV data into events, line by line
+   * @constructor
+   */
   new (options?: Options): this;
+
+  /**
+   * Create a new readable stream that parses CSV data into events, line by line
+   */
   (options?: Options): this;
 
   addListener(event: "close", listener: () => void): this;
