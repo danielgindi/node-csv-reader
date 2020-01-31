@@ -37,8 +37,14 @@ Name | Type | Default | Explanation
   `ltrim` | `Boolean` | `false` | Automatically left-trims columns
   `rtrim` | `Boolean` | `false` | Automatically right-trims columns
   `trim` | `Boolean` | `false` | If true, then both 'ltrim' and 'rtrim' are set to true
+  
+## Events:
 
-##Usage example:
+A `'data'` event will be emitted with each row, either in an array format (`(string|number|boolean)[]`) or an Object format (`Object<string, (string|number|boolean)>`).  
+A preliminary `'header'` event will be emitted with the first row, only in an array format, and without any interpolation to different types (`string[]`).  
+Of course other events as usual - `end` and `error`.
+
+## Usage example:
 
 ```javascript
 
