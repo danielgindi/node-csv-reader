@@ -81,6 +81,7 @@ declare interface CsvReadableStream extends Transform {
 
   addListener(event: "close", listener: () => void): this;
   addListener(event: "data", listener: (line: Line) => void): this;
+  addListener(event: "header", listener: (headers: string[]) => void): this;
   addListener(event: "end", listener: () => void): this;
   addListener(event: "readable", listener: () => void): this;
   addListener(event: "drain", listener: () => void): this;
@@ -92,6 +93,7 @@ declare interface CsvReadableStream extends Transform {
 
   on(event: "close", listener: () => void): this;
   on(event: "data", listener: (line: Line) => void): this;
+  on(event: "header", listener: (headers: string[]) => void): this;
   on(event: "end", listener: () => void): this;
   on(event: "readable", listener: () => void): this;
   on(event: "drain", listener: () => void): this;
@@ -103,6 +105,7 @@ declare interface CsvReadableStream extends Transform {
 
   once(event: "close", listener: () => void): this;
   once(event: "data", listener: (line: Line) => void): this;
+  once(event: "header", listener: (headers: string[]) => void): this;
   once(event: "end", listener: () => void): this;
   once(event: "readable", listener: () => void): this;
   once(event: "drain", listener: () => void): this;
@@ -114,6 +117,7 @@ declare interface CsvReadableStream extends Transform {
 
   prependListener(event: "close", listener: () => void): this;
   prependListener(event: "data", listener: (line: Line) => void): this;
+  prependListener(event: "header", listener: (headers: string[]) => void): this;
   prependListener(event: "end", listener: () => void): this;
   prependListener(event: "readable", listener: () => void): this;
   prependListener(event: "drain", listener: () => void): this;
@@ -128,6 +132,10 @@ declare interface CsvReadableStream extends Transform {
 
   prependOnceListener(event: "close", listener: () => void): this;
   prependOnceListener(event: "data", listener: (line: Line) => void): this;
+  prependOnceListener(
+    event: "header",
+    listener: (headers: string[]) => void
+  ): this;
   prependOnceListener(event: "end", listener: () => void): this;
   prependOnceListener(event: "readable", listener: () => void): this;
   prependOnceListener(event: "drain", listener: () => void): this;
@@ -142,6 +150,7 @@ declare interface CsvReadableStream extends Transform {
 
   removeListener(event: "close", listener: () => void): this;
   removeListener(event: "data", listener: (line: Line) => void): this;
+  removeListener(event: "header", listener: (headers: string[]) => void): this;
   removeListener(event: "end", listener: () => void): this;
   removeListener(event: "readable", listener: () => void): this;
   removeListener(event: "drain", listener: () => void): this;
