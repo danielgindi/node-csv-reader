@@ -40,7 +40,7 @@ Name | Type | Default | Explanation
   
 ## Events:
 
-A `'data'` event will be emitted with each row, either in an array format (`(string|number|boolean)[]`) or an Object format (`Object<string, (string|number|boolean)>`).  
+A `'data'` event will be emitted with each row, either in an array format (`(string|number|boolean)[]`) or an Object format (`Object<string, (string|number|boolean)>`), depending on the `asObject` option.  
 A preliminary `'header'` event will be emitted with the first row, only in an array format, and without any interpolation to different types (`string[]`).  
 Of course other events as usual - `end` and `error`.
 
