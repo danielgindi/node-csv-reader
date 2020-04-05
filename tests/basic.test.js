@@ -79,4 +79,41 @@ describe('End to end', async () => {
 		]);
 	});
 
+	it(`Test basic csv read with quoted values`, async () => {
+		let [header, output] = await new Promise((resolve, reject) => {
+			let inputStream = Fs.createReadStream(Path.join(__dirname, 'test-quoted.csv'), 'utf8');
+			let header = null;
+			let output = [];
+
+			inputStream
+				.pipe(new CsvReadableStream({
+					parseNumbers: true,
+					parseBooleans: true,
+					trim: true,
+					asObject: true,
+				}))
+				.on('header', row => {
+					header = row;
+				})
+				.on('data', row => {
+					output.push(row);
+				})
+				.on('end', () => {
+					resolve([header, output]);
+				})
+				.on('error', err => {
+					reject(err);
+				});
+		});
+
+		assert.deepEqual(header, [
+			'NAME', 'AGE', 'ALIVE',
+		]);
+
+		assert.deepEqual(output, [
+			{ NAME: 'John Smith', AGE: 50, ALIVE: false },
+			{ NAME: 'Jane, Doe', AGE: 25, ALIVE: true },
+		]);
+	});
+
 });
