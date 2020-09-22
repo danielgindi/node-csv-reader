@@ -1,0 +1,13 @@
+VALUE
+0
+123
+ 123
+-123
+NaN
+-NaN
+Infinity
+-Infinity
+2.343240e+6
+-2.343240e+6
+true
+false

@@ -116,4 +116,37 @@ describe('End to end', async () => {
 		]);
 	});
 
+	it(`Test basic csv read with parsed numbers and booleans`, async () => {
+		let output = await new Promise((resolve, reject) => {
+			let inputStream = Fs.createReadStream(Path.join(__dirname, 'test-auto-parse.csv'), 'utf8');
+			let output = [];
+
+			inputStream
+				.pipe(new CsvReadableStream({
+					parseNumbers: true,
+					parseBooleans: true,
+					trim: true,
+					asObject: false,
+          skipHeader: true,
+				}))
+				.on('data', row => {
+					output.push(row[0]);
+				})
+				.on('end', () => {
+					resolve(output);
+				})
+				.on('error', err => {
+					reject(err);
+				});
+		});
+
+		assert.deepStrictEqual(output, [
+      0, 123, 123, -123,
+      NaN, -NaN,
+      Infinity, -Infinity,
+      2.343240e+6, -2.343240e+6,
+      true, false,
+		]);
+	});
+
 });
