@@ -2,14 +2,14 @@ module.exports = {
     env: {
         es6: true,
         browser: false,
-        node: true
+        node: true,
     },
     parserOptions: {
         ecmaVersion: 2018,
-        sourceType: "module"
+        sourceType: "module",
     },
     globals: {
-        "__base": true
+        "__base": true,
     },
     extends: ["eslint:recommended"],
     rules: {
@@ -24,7 +24,7 @@ module.exports = {
             {
                 "words": true,
                 "nonwords": false,
-            }
+            },
         ],
         "comma-spacing": ["warn", { "before": false, "after": true }],
         "object-curly-spacing": ["warn", "always"],
