@@ -5,7 +5,7 @@ const Util = require('util');
  * @const
  * @type {RegExp}
  */
-const PARSE_FLOAT_TEST = /^[0-9]+(?:\.[0-9]*)?(?:[eE]\+[0-9]+)?$|^(?:[0-9]+)?\.[0-9]+(?:e+[0-9]+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
+const PARSE_FLOAT_TEST = /^[-+]?[0-9]+(?:\.[0-9]*)?(?:[eE]\+[0-9]+)?$|^(?:[0-9]+)?\.[0-9]+(?:e+[0-9]+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
 
 const Transform = Stream.Transform;
 
