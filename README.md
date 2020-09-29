@@ -58,7 +58,7 @@ inputStream
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
 	})
-	.on('end', function (data) {
+	.on('end', function () {
 	    console.log('No more rows!');
 	});
 
@@ -83,7 +83,7 @@ inputStream
 	.pipe(new CsvReadableStream({ parseNumbers: true, parseBooleans: true, trim: true }))
 	.on('data', function (row) {
 	    console.log('A row arrived: ', row);
-	}).on('end', function (data) {
+	}).on('end', function () {
 	    console.log('No more rows!');
 	});
 	
