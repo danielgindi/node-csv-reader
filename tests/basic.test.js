@@ -149,4 +149,32 @@ describe('End to end', async () => {
 		]);
 	});
 
+	it(`Test basic csv error emit`, async () => {
+
+		await assert.rejects(new Promise((resolve, reject) => {
+			let inputStream = Fs.createReadStream(Path.join(__dirname, 'test-auto-parse.csv'), 'utf8');
+			let output = [];
+
+			inputStream
+				.pipe(new CsvReadableStream({
+					parseNumbers: true,
+					parseBooleans: true,
+					trim: true,
+					asObject: false,
+					skipHeader: true,
+				}))
+				.on('data', () => {
+					throw new Error('Error while reading data');
+				})
+				.on('end', () => {
+					resolve(output);
+				})
+				.on('error', err => {
+					reject(err);
+				});
+		}), (err) => {
+			assert.deepStrictEqual(err.message, 'Error while reading data');
+			return true;
+		});
+	});
 });
