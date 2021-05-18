@@ -269,19 +269,28 @@ Util.inherits(CsvReadableStream, Transform);
 //noinspection JSUnusedGlobalSymbols
 CsvReadableStream.prototype._transform = function (chunk, enc, cb) {
 
-    this._processChunk(chunk);
+    try {
+        this._processChunk(chunk);
 
-    cb();
+        cb();
+    } catch (err) {
+        cb(err);
+    }
 };
 
 //noinspection JSUnusedGlobalSymbols
 CsvReadableStream.prototype._flush = function (cb) {
 
-    this._isStreamDone = true;
+    try {
+        this._isStreamDone = true;
 
-    this._processChunk();
+        this._processChunk();
 
-    cb();
+        cb();
+    } catch (err) {
+        cb(err);
+    }
+
 };
 
 /**
