@@ -108,7 +108,7 @@ const CsvReadableStream = function (options) {
 
         // Node doesn't strip BOMs, that's in user's land
         if (lookForBOM) {
-            if (newData.charCodeAt(0) === 0xfeff) {
+            if (newData?.charCodeAt(0) === 0xfeff) {
                 dataIndex++;
             }
             lookForBOM = false;
