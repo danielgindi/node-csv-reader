@@ -5,7 +5,7 @@ const Util = require('util');
  * @const
  * @type {RegExp}
  */
-const PARSE_FLOAT_TEST = /^[-+]?[0-9]+(?:\.[0-9]*)?(?:[eE]\+[0-9]+)?$|^(?:[0-9]+)?\.[0-9]+(?:e+[0-9]+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
+const PARSE_FLOAT_TEST = /^[-+]?\d+(?:\.\d*)?(?:[eE]\+\d+)?$|^(?:\d+)?\.\d+(?:e+\d+)?$|^[-+]?Infinity$|^[-+]?NaN$/;
 
 const Transform = Stream.Transform;
 
@@ -98,20 +98,20 @@ const CsvReadableStream = function (options) {
 
         if (newData) {
             if (data) {
-                data = data.substr(dataIndex) + newData;
+                data = data.substring(dataIndex) + newData;
             } else {
                 data = newData;
             }
             dataLen = data.length;
             dataIndex = 0;
-        }
 
-        // Node doesn't strip BOMs, that's in user's land
-        if (lookForBOM) {
-            if (newData?.charCodeAt(0) === 0xfeff) {
-                dataIndex++;
+            // Node doesn't strip BOMs, that's in user's land
+            if (lookForBOM) {
+                if (newData.charCodeAt(0) === 0xfeff) {
+                    dataIndex++;
+                }
+                lookForBOM = false;
             }
-            lookForBOM = false;
         }
 
         let isFinishedLine = false;

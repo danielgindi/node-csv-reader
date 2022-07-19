@@ -1,0 +1,10 @@
+.idea
+scripts/
+tests/
+.eslintignore
+.eslintrc.js
+.huskyrc
+.mocharc.yml
+.npmignore
+.husky/
+example/
