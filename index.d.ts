@@ -1,6 +1,6 @@
 /// <reference types="node" />
 
-import { Transform, TransformCallback, Readable } from "stream";
+import { Transform, Readable } from "stream";
 
 export declare type Options = {
   /**
