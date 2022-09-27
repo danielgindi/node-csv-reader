@@ -2,7 +2,7 @@
 
 import { Transform, TransformCallback, Readable } from "stream";
 
-declare type Options = {
+export declare type Options = {
   /**
    * Specify what is the CSV delimiter
    * @default ","
@@ -71,16 +71,16 @@ declare type Options = {
   asObject?: boolean;
 };
 
-declare type DataTypes = string | number | boolean;
+export declare type DataTypes = string | number | boolean;
 
-declare type Line = DataTypes[] | { [header: string]: DataTypes };
+export declare type Line = DataTypes[] | { [header: string]: DataTypes };
 
 declare interface CsvReadableStream extends Transform {
   /**
    * Create a new readable stream that parses CSV data into events, line by line
    * @constructor
    */
-  new (options?: Options): this;
+  new(options?: Options): this;
 
   /**
    * Create a new readable stream that parses CSV data into events, line by line
@@ -174,4 +174,4 @@ declare interface CsvReadableStream extends Transform {
 
 declare const CsvReadableStream: CsvReadableStream;
 
-export = CsvReadableStream;
+export default CsvReadableStream;
