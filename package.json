@@ -34,9 +34,10 @@
   "homepage": "https://github.com/danielgindi/node-csv-reader",
   "dependencies": {},
   "devDependencies": {
-    "eslint": "^7.26.0",
-    "husky": "^6.0.0",
-    "pinst": "^2.1.6",
-    "mocha": "^8.4.0"
+    "eslint": "^8.25.0",
+    "eslint-formatter-codeframe": "^7.32.1",
+    "husky": "^8.0.1",
+    "mocha": "^10.0.0",
+    "pinst": "^3.0.0"
   }
 }
