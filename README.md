@@ -24,14 +24,15 @@ npm install --save csv-reader
 
 The options you can pass are:
 
-Name | Type | Default | Explanation
----- | ---- | ------- | -----------
-  `delimiter` | `String` | `,` | The character that separates between cells 
-  `multiline` | `Boolean` | `true` | Allow multiline cells, when the cell is wrapped with quotes ("...\n...") 
-  `allowQuotes` | `Boolean` | `true` | Should quotes be treated as a special character that wraps cells etc.
+Name | Type      | Default | Explanation
+---- |-----------|---------| -----------
+  `delimiter` | `String`  | `,`     | The character that separates between cells 
+  `multiline` | `Boolean` | `true`  | Allow multiline cells, when the cell is wrapped with quotes ("...\n...") 
+  `allowQuotes` | `Boolean` | `true`  | Should quotes be treated as a special character that wraps cells etc.
   `skipEmptyLines` | `Boolean` | `false` | Should empty lines be automatically skipped?
-  `skipHeader` | `Boolean` | `false` | Should the first header row be skipped?
-  `asObject` | `Boolean` | `false` | If true, each row will be converted automatically to an object based on the header. This implied `skipHeader=true`.
+  ~~`skipHeader`~~ | `Boolean` | `false` | Should the first header row be skipped? (*Deprecated*, please use `skipLines`)
+  `skipLines` | `Number`  | `0`     | Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
+  `asObject` | `Boolean` | `false` | If true, each row will be converted automatically to an object based on the header. This adds `1` to `skipLines`.
   `parseNumbers` | `Boolean` | `false` | Should numbers be automatically parsed? This will parse any format supported by `parseFloat` including scientific notation, `Infinity` and `NaN`.
   `parseBooleans` | `Boolean` | `false` | Automatically parse booleans (strictly lowercase `true` and `false`)
   `ltrim` | `Boolean` | `false` | Automatically left-trims columns

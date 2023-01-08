@@ -60,12 +60,19 @@ export declare type Options = {
   /**
    * If true, then skip the first header row
    * @default false
+   * @deprecated please use `skipLines`
    */
   skipHeader?: boolean;
 
   /**
+   * Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
+   * @default 0
+   */
+  skipLines?: number;
+
+  /**
    * If true, each row will be converted automatically to an object based on the header.
-   * This implied `skipHeader=true`.
+   * This adds `1` to `skipLines`.
    * @default false
    */
   asObject?: boolean;

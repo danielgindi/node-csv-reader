@@ -20,9 +20,10 @@ const Transform = Stream.Transform;
  * @param {boolean} [options.ltrim=false] - Automatically left-trims columns
  * @param {boolean} [options.rtrim=false] - Automatically right-trims columns
  * @param {boolean} [options.trim=false] - If true, then both 'ltrim' and 'rtrim' are set to true
- * @param {boolean} [options.skipHeader=false] - If true, then skip the first header row
+ * @param {boolean} [options.skipHeader=false] - If true, then skip the first header row <i>[deprecated]</i>
+ * @param {boolean} [options.skipLines=0] - Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
  * @param {boolean} [options.asObject=false] - If true, each row will be converted automatically to an object based
- *                                             on the header. This implied `skipHeader=true`.
+ *                                             on the header. This adds `1` to `skipLines`.
  * @returns {CsvReadableStream}
  * @constructor
  */
@@ -57,7 +58,7 @@ const CsvReadableStream = function (options) {
         rtrim = !!options.rtrim || !!options.trim,
         trim = ltrim && rtrim,
         asObject = !!options.asObject,
-        skipHeader = !!options.skipHeader || asObject,
+        skipLines = (options.skipLines || 0) + (!!options.skipHeader || asObject ? 1 : 0),
 
         postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
 
@@ -227,7 +228,7 @@ const CsvReadableStream = function (options) {
                 columnCount = 0;
                 isQuoted = false;
 
-                if (skipHeader === false || rowIndex > 0) {
+                if (rowIndex >= skipLines) {
                     // Is this row full or empty?
                     if (isEmptyRow === false || skipEmptyLines === false) {
                         // Emit the parsed row
