@@ -66,6 +66,7 @@ export declare type Options = {
 
   /**
    * Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
+   * (after the header line if `headerLine` is set)
    * @default 0
    */
   skipLines?: number;
@@ -76,6 +77,12 @@ export declare type Options = {
    * @default false
    */
   asObject?: boolean;
+
+  /**
+   * Line number of the header (skipLines will be lines skipped after the header line)
+   * @default 0
+   */
+  headerLine?: number;
 };
 
 export declare type DataTypes = string | number | boolean;

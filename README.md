@@ -31,7 +31,8 @@ Name | Type      | Default | Explanation
   `allowQuotes` | `Boolean` | `true`  | Should quotes be treated as a special character that wraps cells etc.
   `skipEmptyLines` | `Boolean` | `false` | Should empty lines be automatically skipped?
   ~~`skipHeader`~~ | `Boolean` | `false` | Should the first header row be skipped? (*Deprecated*, please use `skipLines`)
-  `skipLines` | `Number`  | `0`     | Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
+  `skipLines` | `Number`  | `0`     | Number of lines to skip (if `skipHeader` is `true`, then this gets +1) (after the header line if `headerLine` is set)
+  `headerLine` | `Number` | `0`     | Line number of the header (`skipLines` will be lines skipped after the header line)
   `asObject` | `Boolean` | `false` | If true, each row will be converted automatically to an object based on the header. This adds `1` to `skipLines`.
   `parseNumbers` | `Boolean` | `false` | Should numbers be automatically parsed? This will parse any format supported by `parseFloat` including scientific notation, `Infinity` and `NaN`.
   `parseBooleans` | `Boolean` | `false` | Automatically parse booleans (strictly lowercase `true` and `false`)

@@ -24,6 +24,7 @@ const Transform = Stream.Transform;
  * @param {boolean} [options.skipLines=0] - Number of lines to skip (if `skipHeader` is `true`, then this gets +1)
  * @param {boolean} [options.asObject=false] - If true, each row will be converted automatically to an object based
  *                                             on the header. This adds `1` to `skipLines`.
+ * @param {number} [options.headerLine=0] - Line number of the header (skipLines will be lines skipped after the header line)
  * @returns {CsvReadableStream}
  * @constructor
  */
@@ -58,7 +59,8 @@ const CsvReadableStream = function (options) {
         rtrim = !!options.rtrim || !!options.trim,
         trim = ltrim && rtrim,
         asObject = !!options.asObject,
-        skipLines = (options.skipLines || 0) + (!!options.skipHeader || asObject ? 1 : 0),
+        skipLines = options.headerLine ? options.headerLine + (options.skipLines || 0) : (options.skipLines || 0) + (options.skipHeader || asObject ? 1 : 0),
+        headerLine = (options.headerLine - 1 || 0),
 
         postProcessingEnabled = parseNumbers || parseBooleans || ltrim || rtrim;
 
@@ -162,7 +164,7 @@ const CsvReadableStream = function (options) {
                 }
             } else {
                 if (c === delimiter) {
-                    if (rowIndex === 0) {
+                    if (rowIndex === headerLine) {
                         headerRow.push(column.trim());
                     }
 
@@ -204,7 +206,7 @@ const CsvReadableStream = function (options) {
                 const isEmptyRow = columnCount === 1 && column.length === 0;
 
                 // Process last column
-                if (rowIndex === 0) {
+                if (rowIndex === headerLine) {
                     headerRow.push(column.trim());
                     this.emit('header', headerRow);
                 }
